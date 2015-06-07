@@ -1,13 +1,14 @@
 set nocp
 
 " Global definitions
-let g:settings = {}
-let g:settings.default_indent = 2
-let g:settings.max_column = 120
-let g:settings.enable_cursorcolumn = 0
-let g:settings.cache_dir = '~/.vim/.cache'
+let g:myvim_settings = {}
+let g:myvim_settings.default_indent = 2
+let g:myvim_settings.max_column = 120
+let g:myvim_settings.enable_cursorcolumn = 0
+let g:myvim_settings.cache_dir = '~/.vim/.cache'
 
 
+let g:myvim_plugin_groups = ['ui']
 
 
 let mapleader = ","
@@ -20,6 +21,7 @@ let g:mapleader = ","
 " }}}
 
 " Base UI {{{
+  syntax on
   set number
   set foldenable                                      "enable folds by default
   set foldmethod=marker                               "fold via syntax of files
@@ -108,7 +110,6 @@ if !filereadable(manager_readme)
   echo ""
   echo "Installing Plugin Manager..."
   echo ""
-  silent !mkdir -p $HOME/.vim/autoload/
   silent !mkdir -p $HOME/.vim/pm/
   silent !mkdir -p $HOME/.vim/scripts
   silent !mkdir -p $HOME/.vim/plugins
@@ -132,8 +133,14 @@ if has('vim_starting')
 	set runtimepath+=~/.vim/pm/neobundle.vim
 endif"
 
+if count(g:myvim_plugin_groups, 'ui') "{{{
+  echo "loading ui module..."
+  silent curl https://github.com/crealive/myvim/blob/master/scripts/ui.vim > ~/.vim/scripts/ui.vim
+  echo "...loading done."
+"}}}
+
 " Required:
-call neobundle#begin(expand('~/.vm/plugins/'))
+call neobundle#begin(expand('~/.vim/plugins/'))
 
 " Let NeoBundle manage NeoBundle
 NeoBundleFetch 'Shougo/neobundle.vim'
