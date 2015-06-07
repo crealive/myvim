@@ -96,6 +96,7 @@ let g:mapleader = ","
   let &directory = Get_cache_dir('swap')
   set noswapfile
 
+  silent !mkdir -p $HOME/.vim/pm/
   call EnsureExists(g:myvim_settings.cache_dir)
   call EnsureExists(&undodir)
   call EnsureExists(&backupdir)
@@ -112,7 +113,7 @@ if !filereadable(manager_readme)
   echo "Installing Plugin Manager..."
   echo ""
   silent !mkdir -p $HOME/.vim/pm/
-  silent !if [ ! -d "$HOME/.vim/scripts/" ]; then mkdir -p $HOME/.vim/scripts; fi
+  silent !mkdir -p $HOME/.vim/scripts
   silent !mkdir -p $HOME/.vim/plugins
   silent !git clone https://github.com/Shougo/neobundle.vim ~/.vim/pm/neobundle.vim
 
