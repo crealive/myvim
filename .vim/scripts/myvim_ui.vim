@@ -10,3 +10,10 @@ NeoBundle 'bling/vim-airline' "{{{
   nnoremap <up> :tabnext<CR>
   nnoremap <down> :tabprev<CR>
 "}}}
+
+NeoBundle 'mhinz/vim-startify' "{{{
+  let g:startify_session_dir = Get_cache_dir('sessions')
+  let g:startify_change_to_vcs_root = 1
+  let g:startify_show_sessions = 1
+  nnoremap <F1> :Startify<cr>
+"}}}

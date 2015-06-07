@@ -1,4 +1,3 @@
-set nocp 
 " Global definitions
 let g:myvim_settings = {}
 let g:myvim_settings.default_indent = 2
@@ -9,7 +8,6 @@ let g:myvim_settings.cache_dir = '~/.vim/.cache'
 
 " available groups: 'ui', 'editing'
 let g:myvim_plugin_groups = []
-
 
 let mapleader = ","
 let g:mapleader = ","
@@ -127,13 +125,13 @@ if !filereadable(manager_readme)
 endif
 
 if has('vim_starting')
-	if &compatible
-		set nocompatible               " Be iMproved
-	endif
+  if &compatible
+    set nocompatible               " Be iMproved
+  endif
 
-	" Required:
-	set runtimepath+=~/.vim/pm/neobundle.vim
-endif"
+  " Required:
+  set runtimepath+=~/.vim/pm/neobundle.vim
+endif
 
 " Modules {{{
   if count(g:myvim_plugin_groups, 'ui') "{{{

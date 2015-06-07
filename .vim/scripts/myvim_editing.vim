@@ -40,7 +40,6 @@ nnoremap gm m
 " }}}
 "
 NeoBundle 'justinmk/vim-sneak' " a minimalist, versatile Vim motion plugin that jumps to any location specified by two characters {{{
-
 " s{char}{char}
 let g:sneak#streak = 1
 " }}}
