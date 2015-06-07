@@ -1,5 +1,4 @@
-set nocp
-
+set nocp 
 " Global definitions
 let g:myvim_settings = {}
 let g:myvim_settings.default_indent = 2
@@ -8,7 +7,8 @@ let g:myvim_settings.enable_cursorcolumn = 0
 let g:myvim_settings.cache_dir = '~/.vim/.cache'
 
 
-let g:myvim_plugin_groups = ['ui']
+" available groups: 'ui', 'editing'
+let g:myvim_plugin_groups = []
 
 
 let mapleader = ","
@@ -26,8 +26,8 @@ let g:mapleader = ","
   set foldenable                                      "enable folds by default
   set foldmethod=marker                               "fold via syntax of files
 
-  let &colorcolumn=g:settings.max_column
-  if g:settings.enable_cursorcolumn
+  let &colorcolumn=g:myvim_settings.max_column
+  if g:myvim_settings.enable_cursorcolumn
     set cursorcolumn
     autocmd WinLeave * setlocal nocursorcolumn
     autocmd WinEnter * setlocal cursorcolumn
@@ -48,9 +48,9 @@ let g:mapleader = ","
   set autoindent                                      "automatically indent to match adjacent lines
   set expandtab                                       "spaces instead of tabs
   set smarttab                                        "use shiftwidth to enter tabs
-  let &tabstop=g:settings.default_indent              "number of spaces per tab for display
-  let &softtabstop=g:settings.default_indent          "number of spaces per tab in insert mode
-  let &shiftwidth=g:settings.default_indent           "number of spaces when indenting
+  let &tabstop=g:myvim_settings.default_indent              "number of spaces per tab for display
+  let &softtabstop=g:myvim_settings.default_indent          "number of spaces per tab in insert mode
+  let &shiftwidth=g:myvim_settings.default_indent           "number of spaces when indenting
   set list                                            "highlight whitespace
   set listchars=tab:│\ ,trail:•,extends:❯,precedes:❮
   set shiftround
@@ -73,7 +73,7 @@ let g:mapleader = ","
 
 " Folder management {{{
   function! Get_cache_dir(suffix) "{{{
-    return resolve(expand(g:settings.cache_dir . '/' . a:suffix))
+    return resolve(expand(g:myvim_settings.cache_dir . '/' . a:suffix))
   endfunction "}}}
 
   function! EnsureExists(path) "{{{
@@ -96,7 +96,7 @@ let g:mapleader = ","
   let &directory = Get_cache_dir('swap')
   set noswapfile
 
-  call EnsureExists(g:settings.cache_dir)
+  call EnsureExists(g:myvim_settings.cache_dir)
   call EnsureExists(&undodir)
   call EnsureExists(&backupdir)
   call EnsureExists(&directory)
@@ -104,6 +104,7 @@ let g:mapleader = ","
 
 " Plugin Manager Setup {{{
 let pm_directory = '/.vim/pm/'
+let scripts_directory = '/.vim/scripts/'
 let manager_readme=expand($HOME.pm_directory.'neobundle.vim/README.md')
 
 if !filereadable(manager_readme)
@@ -111,7 +112,7 @@ if !filereadable(manager_readme)
   echo "Installing Plugin Manager..."
   echo ""
   silent !mkdir -p $HOME/.vim/pm/
-  silent !mkdir -p $HOME/.vim/scripts
+  silent !if [ ! -d "$HOME/.vim/scripts/" ]; then mkdir -p $HOME/.vim/scripts; fi
   silent !mkdir -p $HOME/.vim/plugins
   silent !git clone https://github.com/Shougo/neobundle.vim ~/.vim/pm/neobundle.vim
 
@@ -133,10 +134,24 @@ if has('vim_starting')
 	set runtimepath+=~/.vim/pm/neobundle.vim
 endif"
 
-if count(g:myvim_plugin_groups, 'ui') "{{{
-  echo "loading ui module..."
-  silent curl https://github.com/crealive/myvim/blob/master/scripts/ui.vim > ~/.vim/scripts/ui.vim
-  echo "...loading done."
+" Modules {{{
+  if count(g:myvim_plugin_groups, 'ui') "{{{
+    let myui=expand($HOME.scripts_directory.'myvim_ui.vim')
+    if !filereadable(myui)
+      echo "loading ui module... ".myui
+      silent !curl https://raw.githubusercontent.com/crealive/myvim/master/scripts/myvim_ui.vim > ~/.vim/scripts/myvim_ui.vim
+    endif
+  endif
+  "}}}
+
+  if count(g:myvim_plugin_groups, 'editing') "{{{
+    let myediting=expand($HOME.scripts_directory.'myvim_editing.vim')
+    if !filereadable(myediting)
+      echo "loading ui module... ".myui
+      silent !curl https://raw.githubusercontent.com/crealive/myvim/master/scripts/myvim_editing.vim > ~/.vim/scripts/myvim_editing.vim
+    endif
+  endif
+  "}}}
 "}}}
 
 " Required:
