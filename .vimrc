@@ -16,8 +16,8 @@ let g:mapleader = ","
 
 
 " Key mappings {{{
-  nmap <leader><1> :so $MYVIMRC<CR>                 "reload vim configuration
-  nnoremap <BS> :set hlsearch! hlsearch?<cr>          "show / hide search matchings
+  nmap <leader><t> :so $MYVIMRC<CR>                 "reload vim configuration
+  nnoremap <Return> :set hlsearch! hlsearch?<cr>          "show / hide search matchings
 " }}}
 
 " Base UI {{{
@@ -68,8 +68,8 @@ let g:mapleader = ","
   set hlsearch                                        "highlight searches
   set incsearch                                       "incremental searching
   set ignorecase                                      "ignore case for searching
-  set smartcase                                       "do case-sensitive if there's a capital letter"{{{
-" }}}"}}}
+  set smartcase                                       "do case-sensitive if there's a capital letter
+" }}}
 
 " Folder management {{{
   function! Get_cache_dir(suffix) "{{{
@@ -115,12 +115,12 @@ if !filereadable(manager_readme)
   silent !mkdir -p $HOME/.vim/pm/
   silent !mkdir -p $HOME/.vim/scripts
   silent !mkdir -p $HOME/.vim/plugins
-  silent !git clone https://github.com/Shougo/neobundle.vim ~/.vim/pm/neobundle.vim
 
   " Note: Skip initialization for vim-tiny or vim-small.
   if 0 | endif
 
   " Required:
+  silent !git clone https://github.com/Shougo/neobundle.vim ~/.vim/pm/neobundle.vim
   silent !echo "NeoBundle 'tpope/vim-sensible'" >> $HOME/.vim/scripts/base.vim
   echo "...Done"
   exit 0
@@ -140,7 +140,7 @@ endif"
     let myui=expand($HOME.scripts_directory.'myvim_ui.vim')
     if !filereadable(myui)
       echo "loading ui module... ".myui
-      silent !curl https://raw.githubusercontent.com/crealive/myvim/master/scripts/myvim_ui.vim > ~/.vim/scripts/myvim_ui.vim
+      silent !curl https://raw.githubusercontent.com/crealive/myvim/master/.vim/scripts/myvim_ui.vim > ~/.vim/scripts/myvim_ui.vim
     endif
   endif
   "}}}
@@ -149,7 +149,7 @@ endif"
     let myediting=expand($HOME.scripts_directory.'myvim_editing.vim')
     if !filereadable(myediting)
       echo "loading ui module... ".myui
-      silent !curl https://raw.githubusercontent.com/crealive/myvim/master/scripts/myvim_editing.vim > ~/.vim/scripts/myvim_editing.vim
+      silent !curl https://raw.githubusercontent.com/crealive/myvim/master/.vim/scripts/myvim_editing.vim > ~/.vim/scripts/myvim_editing.vim
     endif
   endif
   "}}}
