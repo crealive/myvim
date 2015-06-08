@@ -7,8 +7,8 @@ let g:myvim_settings.cache_dir = '~/.vim/.cache'
 
 
 " available groups: 'ui', 'editing', 'vcs', 'unite'
-let g:myvim_plugin_groups = [ 'ui', 'editing',  'vcs', 'unite' ]
-" let g:myvim_plugin_groups = []
+" let g:myvim_plugin_groups = [ 'ui', 'editing',  'vcs', 'unite' ]
+let g:myvim_plugin_groups = []
 
 let mapleader = ","
 let g:mapleader = ","
