@@ -7,8 +7,8 @@ let g:myvim_settings.cache_dir = '~/.vim/.cache'
 
 
 " available groups: 'ui', 'editing', 'vcs', 'unite'
-" let g:myvim_plugin_groups = [ 'ui', 'editing',  'vcs', 'unite' ]
-let g:myvim_plugin_groups = []
+let g:myvim_plugin_groups = [ 'ui', 'editing',  'vcs', 'unite' ]
+" let g:myvim_plugin_groups = []
 
 let mapleader = ","
 let g:mapleader = ","
@@ -41,6 +41,9 @@ let g:mapleader = ","
   set timeoutlen=300                                  "mapping timeout
   set ttimeoutlen=50                                  "keycode timeout
 
+  set hidden                                          "allow buffer switching without saving
+  set autoread                                        "auto reload if file saved externally
+  set fileformats+=mac                                "add mac to auto-detection of file format line endings
 
   " whitespace
   set backspace=indent,eol,start                      "allow backspacing everything in insert mode
