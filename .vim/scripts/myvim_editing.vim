@@ -1,3 +1,5 @@
+if count(g:myvim_plugin_groups, 'editing')
+
 
 NeoBundle 'tpope/vim-surround' " Adds surroundings 's' {{{ 
 " Change a surrounding: cs <old> <new>
@@ -42,4 +44,13 @@ nnoremap gm m
 NeoBundle 'justinmk/vim-sneak' " a minimalist, versatile Vim motion plugin that jumps to any location specified by two characters {{{
 " s{char}{char}
 let g:sneak#streak = 1
+nmap f <Plug>Sneak_s
+nmap F <Plug>Sneak_S
+xmap f <Plug>Sneak_s
+xmap F <Plug>Sneak_S
+omap f <Plug>Sneak_s
+omap F <Plug>Sneak_S
 " }}}
+
+
+endif

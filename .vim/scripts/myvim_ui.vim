@@ -1,3 +1,6 @@
+if count(g:myvim_plugin_groups, 'ui')
+
+
 NeoBundle 'bling/vim-airline' "{{{
   let g:airline#extensions#tabline#enabled = 1
   let g:airline#extensions#tabline#left_sep = ' '
@@ -17,3 +20,6 @@ NeoBundle 'mhinz/vim-startify' "{{{
   let g:startify_show_sessions = 1
   nnoremap <F1> :Startify<cr>
 "}}}
+
+
+endif
