@@ -6,7 +6,8 @@ let g:myvim_settings.enable_cursorcolumn = 0
 let g:myvim_settings.cache_dir = '~/.vim/.cache'
 
 
-" available groups: 'ui', 'editing'
+" available groups: 'ui', 'editing', 'vcs', 'unite'
+" let g:myvim_plugin_groups = [ 'ui', 'editing',  'vcs', 'unite' ]
 let g:myvim_plugin_groups = []
 
 let mapleader = ","
@@ -140,8 +141,7 @@ endif
       echo "loading ui module... ".myui
       silent !curl https://raw.githubusercontent.com/crealive/myvim/master/.vim/scripts/myvim_ui.vim > ~/.vim/scripts/myvim_ui.vim
     endif
-  endif
-  "}}}
+  endif "}}}
 
   if count(g:myvim_plugin_groups, 'editing') "{{{
     let myediting=expand($HOME.scripts_directory.'myvim_editing.vim')
@@ -149,8 +149,23 @@ endif
       echo "loading ui module... ".myui
       silent !curl https://raw.githubusercontent.com/crealive/myvim/master/.vim/scripts/myvim_editing.vim > ~/.vim/scripts/myvim_editing.vim
     endif
-  endif
-  "}}}
+  endif "}}}
+
+  if count(g:myvim_plugin_groups, 'vcs') "{{{
+    let myvcs=expand($HOME.scripts_directory.'myvim_vcs.vim')
+    if !filereadable(myvcs)
+      echo "loading ui module... ".myvcs
+      silent !curl https://raw.githubusercontent.com/crealive/myvim/master/.vim/scripts/myvim_vcs.vim > ~/.vim/scripts/myvim_vcs.vim
+    endif
+  endif "}}}
+
+  if count(g:myvim_plugin_groups, 'unite') "{{{
+    let myunite=expand($HOME.scripts_directory.'myvim_unite.vim')
+    if !filereadable(myunite)
+      echo "loading ui module... ".myunite
+      silent !curl https://raw.githubusercontent.com/crealive/myvim/master/.vim/scripts/myvim_unite.vim > ~/.vim/scripts/myvim_unite.vim
+    endif
+  endif "}}}
 "}}}
 
 " Required:
