@@ -18,6 +18,7 @@ There are two ways to install this distribution:
 ### Copy the .vimrc
 
 If curl is installed, it is very easy to copy the .vimrc to your home directory's root:
+
 1. Make a backup from your current .vim and .vimrc
 2. `curl https://raw.githubusercontent.com/crealive/myvim/master/.vimrc > ~/.vimrc`
 
