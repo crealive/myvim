@@ -7,8 +7,8 @@ let g:myvim_settings.cache_dir = '~/.vim/.cache'
 
 
 " available groups: 'ui', 'editing', 'vcs', 'unite'
-let g:myvim_plugin_groups = [ 'ui', 'editing',  'vcs', 'unite', 'auto_completion' ]
-" let g:myvim_plugin_groups = []
+" let g:myvim_plugin_groups = [ 'ui', 'editing',  'vcs', 'unite', 'auto_completion' ]
+let g:myvim_plugin_groups = []
 
 let s:myvim_script_uri = "https://raw.githubusercontent.com/crealive/myvim/master/.vim/scripts/"
 
@@ -140,7 +140,7 @@ if has('vim_starting')
 endif
 
 " Modules {{{
-  function! Download(my_module)
+  function! DownloadIfNeeded(my_module)
     let module = a:my_module
     let path = fnamemodify($HOME . s:scripts_directory . 'myvim_' . module . '.vim', ':p')
     if !filereadable(path)
@@ -149,23 +149,23 @@ endif
   endfunction
 
   if count(g:myvim_plugin_groups, 'ui') "{{{
-    call Download('ui')
+    call DownloadIfNeeded('ui')
   endif "}}}
 
   if count(g:myvim_plugin_groups, 'editing') "{{{
-    call Download('editing')
+    call DownloadIfNeeded('editing')
   endif "}}}
 
   if count(g:myvim_plugin_groups, 'vcs') "{{{
-    call Download('vcs')
+    call DownloadIfNeeded('vcs')
   endif "}}}
 
   if count(g:myvim_plugin_groups, 'unite') "{{{
-    call Download('unite')
+    call DownloadIfNeeded('unite')
   endif "}}}
 
   if count(g:myvim_plugin_groups, 'auto_completion') "{{{
-    call Download('auto_completion')
+    call DownloadIfNeeded('auto_completion')
   endif "}}}
 "}}}
 
