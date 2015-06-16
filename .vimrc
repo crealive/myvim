@@ -7,8 +7,10 @@ let g:myvim_settings.cache_dir = '~/.vim/.cache'
 
 
 " available groups: 'ui', 'editing', 'vcs', 'unite'
-" let g:myvim_plugin_groups = [ 'ui', 'editing',  'vcs', 'unite' ]
-let g:myvim_plugin_groups = []
+let g:myvim_plugin_groups = [ 'ui', 'editing',  'vcs', 'unite', 'auto_completion' ]
+" let g:myvim_plugin_groups = []
+
+let s:myvim_script_uri = "https://raw.githubusercontent.com/crealive/myvim/master/.vim/scripts/"
 
 let mapleader = ","
 let g:mapleader = ","
@@ -107,7 +109,7 @@ let g:mapleader = ","
 
 " Plugin Manager Setup {{{
 let pm_directory = '/.vim/pm/'
-let scripts_directory = '/.vim/scripts/'
+let s:scripts_directory = '/.vim/scripts/'
 let manager_readme=expand($HOME.pm_directory.'neobundle.vim/README.md')
 
 if !filereadable(manager_readme)
@@ -138,36 +140,32 @@ if has('vim_starting')
 endif
 
 " Modules {{{
-  if count(g:myvim_plugin_groups, 'ui') "{{{
-    let myui=expand($HOME.scripts_directory.'myvim_ui.vim')
-    if !filereadable(myui)
-      echo "loading ui module... ".myui
-      silent !curl https://raw.githubusercontent.com/crealive/myvim/master/.vim/scripts/myvim_ui.vim > ~/.vim/scripts/myvim_ui.vim
+  function! Download(my_module)
+    let module = a:my_module
+    let path = fnamemodify($HOME . s:scripts_directory . 'myvim_' . module . '.vim', ':p')
+    if !filereadable(path)
+      silent execute "!curl " . s:myvim_script_uri . 'myvim_' . module . '.vim > ' . path
     endif
+  endfunction
+
+  if count(g:myvim_plugin_groups, 'ui') "{{{
+    call Download('ui')
   endif "}}}
 
   if count(g:myvim_plugin_groups, 'editing') "{{{
-    let myediting=expand($HOME.scripts_directory.'myvim_editing.vim')
-    if !filereadable(myediting)
-      echo "loading ui module... ".myui
-      silent !curl https://raw.githubusercontent.com/crealive/myvim/master/.vim/scripts/myvim_editing.vim > ~/.vim/scripts/myvim_editing.vim
-    endif
+    call Download('editing')
   endif "}}}
 
   if count(g:myvim_plugin_groups, 'vcs') "{{{
-    let myvcs=expand($HOME.scripts_directory.'myvim_vcs.vim')
-    if !filereadable(myvcs)
-      echo "loading ui module... ".myvcs
-      silent !curl https://raw.githubusercontent.com/crealive/myvim/master/.vim/scripts/myvim_vcs.vim > ~/.vim/scripts/myvim_vcs.vim
-    endif
+    call Download('vcs')
   endif "}}}
 
   if count(g:myvim_plugin_groups, 'unite') "{{{
-    let myunite=expand($HOME.scripts_directory.'myvim_unite.vim')
-    if !filereadable(myunite)
-      echo "loading ui module... ".myunite
-      silent !curl https://raw.githubusercontent.com/crealive/myvim/master/.vim/scripts/myvim_unite.vim > ~/.vim/scripts/myvim_unite.vim
-    endif
+    call Download('unite')
+  endif "}}}
+
+  if count(g:myvim_plugin_groups, 'auto_completion') "{{{
+    call Download('auto_completion')
   endif "}}}
 "}}}
 

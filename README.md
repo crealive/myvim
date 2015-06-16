@@ -13,7 +13,8 @@ There are two ways to install this distribution:
 
 1. Make a backup from your current .vim and .vimrc
 2. Clone this repository somewhere in your home directory
-3. Create links from the .vimrc and .vim from the cloned repository to your home directory's root: `ln -s <path-to-repo>/myvim/.vimrc ~/.vimrc && ln -s <path-to-repo>/myvim/.vim ~/.vim;`
+3. Create links from the .vimrc and .vim from the cloned repository to your home directory's root: 
+`ln -s <path-to-repo>/myvim/.vimrc ~/.vimrc && ln -s <path-to-repo>/myvim/.vim ~/.vim;`
 
 ### Copy the .vimrc
 
@@ -33,8 +34,8 @@ With a `:e $MYVIMRC` ENTER you are able to change the configuration. If you want
 " By default there are no additional modules loaded
 let g:myvim_plugin_groups = []
 
-" For a more comfortable editing experience, activating the editing module could be nice idea.
-" To do that, change the myvim_plugin_groups list to:
+" For a more comfortable editing experience, activating the editing module 
+" could be a nice idea. To do that, change the myvim_plugin_groups list to:
 let g:myvim_plugin_groups = [ 'editing' ]
 ```
 
