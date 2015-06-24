@@ -5,10 +5,7 @@ let g:myvim_settings.max_column = 120
 let g:myvim_settings.enable_cursorcolumn = 0
 let g:myvim_settings.cache_dir = '~/.vim/.cache'
 
-
-" available groups: 'ui', 'editing', 'vcs', 'unite'
-" let g:myvim_plugin_groups = [ 'ui', 'editing',  'vcs', 'unite', 'auto_completion' ]
-let g:myvim_plugin_groups = []
+let s:myvim_scripts_directory = $HOME . "/.vim/scripts/"
 
 let s:myvim_script_uri = "https://raw.githubusercontent.com/crealive/myvim/master/.vim/scripts/"
 
@@ -19,6 +16,8 @@ let g:mapleader = ","
 " Key mappings {{{
   nmap <leader><t> :so $MYVIMRC<CR>                 "reload vim configuration
   nnoremap <Return> :set hlsearch! hlsearch?<cr>          "show / hide search matchings
+  inoremap jk <esc>
+    inoremap kj <esc>
 " }}}
 
 " Base UI {{{
@@ -75,16 +74,40 @@ let g:mapleader = ","
   set smartcase                                       "do case-sensitive if there's a capital letter
 " }}}
 
-" Folder management {{{
+" Folder and file management {{{
   function! Get_cache_dir(suffix) "{{{
     return resolve(expand(g:myvim_settings.cache_dir . '/' . a:suffix))
   endfunction "}}}
 
+  function AppendToFile(file, lines) " {{{
+    if !filereadable(a:file)
+      silent execute "!touch " . a:file
+    endif
+
+    call writefile(readfile(a:file)+a:lines, a:file)
+  endfunction " }}}
+
   function! EnsureExists(path) "{{{
     if !isdirectory(expand(a:path))
-      call mkdir(expand(a:path))
+      silent call mkdir(expand(a:path))
     endif
   endfunction "}}}
+
+  " EnsureBaseConfiguration " {{{
+  let s:base_configuration = fnamemodify(s:myvim_scripts_directory . 'base.vim' , ':p')
+  function! EnsureBaseConfiguration()
+    if !filereadable(s:base_configuration)
+      silent execute "!mkdir -p " . s:myvim_scripts_directory
+      "silent execute "!echo test >> " . s:base_configuration
+      silent call AppendToFile(s:base_configuration, [
+            \"let g:myvim_plugin_groups = \[\]",
+            \"\"let g:myvim_plugin_groups = \[ \"editing\", \"ui\", \"vcs\", \"unite\", \"auto_completion\" \]",
+            \"NeoBundle 'tpope/vim-sensible'"])
+      "silent execute "!echo test >>" . s:base_configuration . "<<EOL   EOL"
+      "let g:myvim_plugin_groups = \[ \\'ui\\', \\'editing\\', \\'vcs\\', \\'unite\\', \\'auto_completion\\' \] >> " . s:myvim_scripts_directory . "base.vim"
+      "silent execute "!echo NeoBundle \\'tpope/vim-sensible\\' >> " . s:base_configuration
+    endif
+  endfunction " }}}
 
   " persistent undo
   if exists('+undofile')
@@ -105,27 +128,30 @@ let g:mapleader = ","
   call EnsureExists(&undodir)
   call EnsureExists(&backupdir)
   call EnsureExists(&directory)
+
+  if !exists('g:ownvim.plugin_groups')
+    call EnsureBaseConfiguration()
+  elseif
+    let g:myvim_plugin_groups = g:ownvim.plugin_groups
+  endif
   "}}}
 
 " Plugin Manager Setup {{{
-let pm_directory = '/.vim/pm/'
-let s:scripts_directory = '/.vim/scripts/'
-let manager_readme=expand($HOME.pm_directory.'neobundle.vim/README.md')
+let s:pm_directory = $HOME . "/.vim/pm/"
+let manager_readme = fnamemodify(s:pm_directory . 'neobundle.vim/README.md', ':p')
 
 if !filereadable(manager_readme)
   echo ""
   echo "Installing Plugin Manager..."
   echo ""
-  silent !mkdir -p $HOME/.vim/pm/
-  silent !mkdir -p $HOME/.vim/scripts
-  silent !mkdir -p $HOME/.vim/plugins
+  silent execute "!git clone https://github.com/Shougo/neobundle.vim " . s:pm_directory . "neobundle.vim"
+  silent execute "!mkdir -p " . s:pm_directory
+  silent execute "!mkdir -p $HOME/.vim/plugins"
 
   " Note: Skip initialization for vim-tiny or vim-small.
   if 0 | endif
 
   " Required:
-  silent !git clone https://github.com/Shougo/neobundle.vim ~/.vim/pm/neobundle.vim
-  silent !echo "NeoBundle 'tpope/vim-sensible'" >> $HOME/.vim/scripts/base.vim
   echo "...Done"
   exit 0
 endif
@@ -139,14 +165,34 @@ if has('vim_starting')
   set runtimepath+=~/.vim/pm/neobundle.vim
 endif
 
+" Required:
+call neobundle#begin(expand('~/.vim/plugins/'))
+
+function PluginsComplete() " {{{
+  call neobundle#end()
+  NeoBundleCheck
+endfunction " }}}
+
+" Let NeoBundle manage NeoBundle
+NeoBundleFetch 'Shougo/neobundle.vim'
+filetype plugin indent on
+
 " Modules {{{
-  function! DownloadIfNeeded(my_module)
+  if filereadable(s:base_configuration)
+      execute "source" s:base_configuration
+  endif
+
+  if !exists('g:myvim_plugin_groups')
+    let g:myvim_plugin_groups = []
+  endif
+
+  function! DownloadIfNeeded(my_module) " {{{
     let module = a:my_module
-    let path = fnamemodify($HOME . s:scripts_directory . 'myvim_' . module . '.vim', ':p')
+    let path = fnamemodify(s:myvim_scripts_directory . 'myvim_' . module . '.vim', ':p')
     if !filereadable(path)
       silent execute "!curl " . s:myvim_script_uri . 'myvim_' . module . '.vim > ' . path
     endif
-  endfunction
+  endfunction " }}}
 
   if count(g:myvim_plugin_groups, 'ui') "{{{
     call DownloadIfNeeded('ui')
@@ -169,18 +215,11 @@ endif
   endif "}}}
 "}}}
 
-" Required:
-call neobundle#begin(expand('~/.vim/plugins/'))
-
-" Let NeoBundle manage NeoBundle
-NeoBundleFetch 'Shougo/neobundle.vim'
-filetype plugin indent on
-
 for file in split(glob("~/.vim/scripts/*.vim"), '\n')
   exe 'source' file
 endfor
 
-call neobundle#end()
-NeoBundleCheck
-
+if !exists('g:ownvim.plugin_groups')
+  call PluginsComplete()
+endif
 " }}}
