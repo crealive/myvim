@@ -23,6 +23,20 @@ If curl is installed, it is very easy to copy the .vimrc to your home directory'
 1. Make a backup from your current .vim and .vimrc
 2. `curl https://raw.githubusercontent.com/crealive/myvim/master/.vimrc > ~/.vimrc`
 
+### Use your own .vimrc
+
+After cloning this project or copying only it's .vimrc you can keep using the .vimrc you aleady had before.
+
+```
+" Your own .vimrc
+let g:ownvim = {}
+let g:ownvim.plugin_groups = []
+
+" Your own settings...
+
+" After all call
+call PluginsComplete()
+```
 
 ## Configuration
 
