@@ -131,7 +131,7 @@ let g:mapleader = ","
 
   if !exists('g:ownvim.plugin_groups')
     call EnsureBaseConfiguration()
-  elseif
+  else
     let g:myvim_plugin_groups = g:ownvim.plugin_groups
   endif
   "}}}

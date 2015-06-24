@@ -32,6 +32,8 @@ After cloning this project or copying only it's .vimrc you can keep using the .v
 let g:ownvim = {}
 let g:ownvim.plugin_groups = []
 
+source <path-to-myvim-.vimrc>
+
 " Your own settings...
 
 " After all call
