@@ -11,14 +11,14 @@ if count(g:myvim_plugin_groups, 'auto_completion')
   if g:myvim_settings.autocomplete_method == 'neocomplete' "{{{
     NeoBundleLazy 'Shougo/neocomplete.vim', {'autoload':{'insert':1}, 'vim_version':'7.3.885'} "{{{
       let g:neocomplete#enable_at_startup=1
-      let g:neocomplete#data_directory=Get_cache_dir('neocomplete')
+      let g:neocomplete#data_directory=GetCacheDir('neocomplete')
     "}}}
   endif "}}}
 
   if g:myvim_settings.autocomplete_method == 'neocomplcache' "{{{
     NeoBundleLazy 'Shougo/neocomplcache.vim', {'autoload':{'insert':1}} "{{{
       let g:neocomplcache_enable_at_startup=1
-      let g:neocomplcache_temporary_dir=Get_cache_dir('neocomplcache')
+      let g:neocomplcache_temporary_dir=GetCacheDir('neocomplcache')
       let g:neocomplcache_enable_fuzzy_completion=1
     "}}}
   endif "}}}

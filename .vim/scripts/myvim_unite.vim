@@ -11,7 +11,7 @@ NeoBundle 'Shougo/unite.vim' "{{{
           \ })
   endfunction
 
-  let g:unite_data_directory=Get_cache_dir('unite')
+  let g:unite_data_directory=GetCacheDir('unite')
   let g:unite_source_history_yank_enable=1
   let g:unite_source_rec_max_cache_files=5000
 
@@ -76,7 +76,7 @@ NeoBundleLazy 'Shougo/unite-help', {'autoload':{'unite_sources':'help'}} "{{{
 "}}}
 
 NeoBundleLazy 'Shougo/junkfile.vim', {'autoload':{'commands':'JunkfileOpen','unite_sources':['junkfile','junkfile/new']}} "{{{
-  let g:junkfile#directory=Get_cache_dir('junk')
+  let g:junkfile#directory=GetCacheDir('junk')
   nnoremap <silent> [unite]j :<C-u>Unite -auto-resize -buffer-name=junk junkfile junkfile/new<cr>
 "}}}
 
@@ -86,7 +86,7 @@ NeoBundle 'Shougo/vimfiler.vim' " {{{
   let g:vimfiler_enable_clipboard = 0
   let g:vimfiler_safe_mode_by_default = 0
   let g:vimfiler_ignore_pattern = '\%(.DS_Store\|.pyc\|.git\w*\|.sw\w*\|.hg\|.svn\)$'
-  let g:vimfiler_data_directory =  Get_cache_dir("vimfiler")
+  let g:vimfiler_data_directory =  GetCacheDir("vimfiler")
   let g:vimfiler_force_overwrite_statusline = 0
 
   let g:vimfiler_tree_leaf_icon = ''
