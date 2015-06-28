@@ -97,10 +97,10 @@ let g:mapleader = ","
   let s:base_configuration = fnamemodify(s:myvim_scripts_directory . 'base.vim' , ':p')
   function! EnsureBaseConfiguration()
     if !filereadable(s:base_configuration)
-      silent execute "!mkdir -p " . s:myvim_scripts_directory
+      call EnsureExists(s:myvim_scripts_directory)
       silent call AppendToFile(s:base_configuration, [
             \"let g:myvim_plugin_groups = \[\]",
-            \"\"let g:myvim_plugin_groups = \[ \"editing\", \"ui\", \"vcs\", \"unite\", \"auto_completion\" \]",
+            \"\"let g:myvim_plugin_groups = \[ \"editing\", \"ui\", \"vcs\", \"unite\", \"auto_completion\", \"html\", \"js\" \]",
             \"NeoBundle 'tpope/vim-sensible'"])
     endif
   endfunction " }}}
@@ -174,6 +174,8 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 filetype plugin indent on
 
 " Modules {{{
+  let s:myvim_available_modules = [ 'ui', 'editing', 'vcs', 'unite', 'auto_completion', 'html', 'js']
+
   if filereadable(s:base_configuration)
     execute "source" s:base_configuration
   endif
@@ -192,25 +194,11 @@ filetype plugin indent on
     endif
   endfunction " }}}
 
-  if count(g:myvim_plugin_groups, 'ui') "{{{
-    call DownloadIfNeeded('ui')
-  endif "}}}
-
-  if count(g:myvim_plugin_groups, 'editing') "{{{
-    call DownloadIfNeeded('editing')
-  endif "}}}
-
-  if count(g:myvim_plugin_groups, 'vcs') "{{{
-    call DownloadIfNeeded('vcs')
-  endif "}}}
-
-  if count(g:myvim_plugin_groups, 'unite') "{{{
-    call DownloadIfNeeded('unite')
-  endif "}}}
-
-  if count(g:myvim_plugin_groups, 'auto_completion') "{{{
-    call DownloadIfNeeded('auto_completion')
-  endif "}}}
+  for module in s:myvim_available_modules
+    if count(g:myvim_plugin_groups, module)
+      call DownloadIfNeeded(module)
+    endif
+  endfor
 "}}}
 
 for file in split(glob("~/.vim/scripts/*.vim"), '\n')
