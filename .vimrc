@@ -75,11 +75,11 @@ let g:mapleader = ","
 " }}}
 
 " Folder and file management {{{
-  function! Get_cache_dir(suffix) "{{{
+  function! GetCacheDir(suffix) "{{{
     return resolve(expand(g:myvim_settings.cache_dir . '/' . a:suffix))
   endfunction "}}}
 
-  function AppendToFile(file, lines) " {{{
+  function! AppendToFile(file, lines) " {{{
     if !filereadable(a:file)
       silent execute "!touch " . a:file
     endif
@@ -98,29 +98,25 @@ let g:mapleader = ","
   function! EnsureBaseConfiguration()
     if !filereadable(s:base_configuration)
       silent execute "!mkdir -p " . s:myvim_scripts_directory
-      "silent execute "!echo test >> " . s:base_configuration
       silent call AppendToFile(s:base_configuration, [
             \"let g:myvim_plugin_groups = \[\]",
             \"\"let g:myvim_plugin_groups = \[ \"editing\", \"ui\", \"vcs\", \"unite\", \"auto_completion\" \]",
             \"NeoBundle 'tpope/vim-sensible'"])
-      "silent execute "!echo test >>" . s:base_configuration . "<<EOL   EOL"
-      "let g:myvim_plugin_groups = \[ \\'ui\\', \\'editing\\', \\'vcs\\', \\'unite\\', \\'auto_completion\\' \] >> " . s:myvim_scripts_directory . "base.vim"
-      "silent execute "!echo NeoBundle \\'tpope/vim-sensible\\' >> " . s:base_configuration
     endif
   endfunction " }}}
 
   " persistent undo
   if exists('+undofile')
     set undofile
-    let &undodir = Get_cache_dir('undo')
+    let &undodir = GetCacheDir('undo')
   endif
 
   " backups
   set backup
-  let &backupdir = Get_cache_dir('backup')
+  let &backupdir = GetCacheDir('backup')
 
   " swap files
-  let &directory = Get_cache_dir('swap')
+  let &directory = GetCacheDir('swap')
   set noswapfile
 
   silent !mkdir -p $HOME/.vim/pm/
@@ -129,10 +125,10 @@ let g:mapleader = ","
   call EnsureExists(&backupdir)
   call EnsureExists(&directory)
 
-  if !exists('g:ownvim.plugin_groups')
-    call EnsureBaseConfiguration()
-  else
+  if exists('g:ownvim.plugin_groups')
     let g:myvim_plugin_groups = g:ownvim.plugin_groups
+  else
+    call EnsureBaseConfiguration()
   endif
   "}}}
 
@@ -168,7 +164,7 @@ endif
 " Required:
 call neobundle#begin(expand('~/.vim/plugins/'))
 
-function PluginsComplete() " {{{
+function! PluginsComplete() " {{{
   call neobundle#end()
   NeoBundleCheck
 endfunction " }}}
@@ -179,7 +175,7 @@ filetype plugin indent on
 
 " Modules {{{
   if filereadable(s:base_configuration)
-      execute "source" s:base_configuration
+    execute "source" s:base_configuration
   endif
 
   if !exists('g:myvim_plugin_groups')
@@ -187,10 +183,12 @@ filetype plugin indent on
   endif
 
   function! DownloadIfNeeded(my_module) " {{{
+    call EnsureExists(s:myvim_scripts_directory)
     let module = a:my_module
     let path = fnamemodify(s:myvim_scripts_directory . 'myvim_' . module . '.vim', ':p')
+    let uri = s:myvim_script_uri . 'myvim_' . module . '.vim > '
     if !filereadable(path)
-      silent execute "!curl " . s:myvim_script_uri . 'myvim_' . module . '.vim > ' . path
+      silent execute "!curl " . uri . path
     endif
   endfunction " }}}
 
