@@ -17,7 +17,7 @@ let g:mapleader = ","
   nmap <leader><t> :so $MYVIMRC<CR>                 "reload vim configuration
   nnoremap <Return> :set hlsearch! hlsearch?<cr>          "show / hide search matchings
   inoremap jk <esc>
-    inoremap kj <esc>
+  inoremap kj <esc>
 " }}}
 
 " Base UI {{{
