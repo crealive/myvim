@@ -132,7 +132,8 @@ let g:mapleader = ","
   endif
   "}}}
 
-" Plugin Manager Setup {{{
+" Plugin Manager {{{
+" Setup {{{
 let s:pm_directory = $HOME . "/.vim/pm/"
 let manager_readme = fnamemodify(s:pm_directory . 'neobundle.vim/README.md', ':p')
 
@@ -173,8 +174,10 @@ endfunction " }}}
 NeoBundleFetch 'Shougo/neobundle.vim'
 filetype plugin indent on
 
+" }}}
+
 " Modules {{{
-  let s:myvim_available_modules = [ 'ui', 'editing', 'vcs', 'unite', 'auto_completion', 'html', 'js']
+  let s:myvim_available_modules = [ 'ui', 'editing', 'vcs', 'unite', 'auto_completion', 'html', 'js', 'gradle' ]
 
   if filereadable(s:base_configuration)
     execute "source" s:base_configuration

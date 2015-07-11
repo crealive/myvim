@@ -2,7 +2,7 @@
 
 The main goal of this vim configuration is to keep it small and simple.
 
-It is based on a simple vimrc, inspired from [dotvim](https://github.com/bling/dotvim). It contains the most useful key mappings and settings. A modern vim package manager, [NeoBundle](https://github.com/Shougo/neobundle.vim), make it easy to install your favourite packages. Of course it supports your vim scripts, you already have maybe. But in addition to that, there are already preconfigured bundles of plugins, modules. By default this modules are not activated, to enable you to use only what you really need. That's why I've called 'myvim': It should be easy to customize to your own needs.
+It is based on a simple vimrc, inspired from [dotvim](https://github.com/bling/dotvim). It contains the most useful key mappings and settings. A modern vim package manager, [NeoBundle](https://github.com/Shougo/neobundle.vim), makes it easy to install your favourite packages. Of course it supports to use your own vim scripts you already have maybe. But in addition to that, there are already preconfigured bundles of plugins, called modules. By default these modules are not activated, to enable you to use only what you really need. That's why I've called it 'myvim': It should be easy to customize it to your own needs.
 
 
 ## Installation
@@ -42,9 +42,9 @@ call PluginsComplete()
 
 ## Configuration
 
-When vim is started the first time with this configuration, the package manager will be installed automatically.
+When vim is started with this configuration the first time, the package manager will be installed automatically.
 
-With a `:e $MYVIMRC` ENTER you are able to change the configuration. If you want to activate the modules, for example, you can update the groups list:
+With a `:e $MYVIMRC` ENTER you're able to change the configuration. If you want to activate the modules, for example, you can update the groups list:
 
 ```
 " By default there are no additional modules loaded

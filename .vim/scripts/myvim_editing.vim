@@ -52,5 +52,7 @@ omap f <Plug>Sneak_s
 omap F <Plug>Sneak_S
 " }}}
 
+NeoBundle 'Raimondi/delimitMate' "Auto completion for quotes, brackets etc
+
 
 endif
