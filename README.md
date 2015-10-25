@@ -1,5 +1,7 @@
 # myvim
 
+If you want to use vim instead of only configure it, then this is for you:
+
 The main goal of this vim configuration is to keep it small and simple.
 
 It is based on a simple vimrc, inspired from [dotvim](https://github.com/bling/dotvim). It contains the most useful key mappings and settings. A modern vim package manager, [NeoBundle](https://github.com/Shougo/neobundle.vim), makes it easy to install your favourite packages. Of course it supports to use your own vim scripts you already have maybe. But in addition to that, there are already preconfigured bundles of plugins, called modules. By default these modules are not activated, to enable you to use only what you really need. That's why I've called it 'myvim': It should be easy to customize it to your own needs.
